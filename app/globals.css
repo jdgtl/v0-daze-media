@@ -101,7 +101,8 @@
 /* Global application of semantic tokens with smooth transitions */
 html,
 body {
-  background: var(--color-background);
+  /* Use background-color so the transition actually animates */
+  background-color: var(--color-background);
   color: var(--color-text);
   transition: background-color var(--theme-transition-duration) var(--theme-transition-ease), color
     var(--theme-transition-duration) var(--theme-transition-ease);

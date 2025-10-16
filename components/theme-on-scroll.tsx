@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect } from "react"
+// Smoothly updates root CSS variables based on the section in view.
 
 const THEME_MAP: Record<
   string,
@@ -90,6 +91,9 @@ export default function ThemeOnScroll({ percentFromTop = 50, minWidth = 0, durat
 
     let prevTheme: string | null = null
     let currentTheme: string | null = null
+    // Fallback to the first element with an explicit element-theme, or default to 'teal'
+    const fallbackTheme =
+      document.querySelector<HTMLElement>("[element-theme]")?.getAttribute("element-theme") ?? "teal"
 
     const observer =
       enabled && sections.length
@@ -103,8 +107,9 @@ export default function ThemeOnScroll({ percentFromTop = 50, minWidth = 0, durat
                   setRootTheme(themeId)
                 } else {
                   if (currentTheme === themeId) {
-                    currentTheme = prevTheme
-                    if (currentTheme) setRootTheme(currentTheme)
+                    // Restore the previous theme, or a safe fallback if none yet
+                    currentTheme = prevTheme ?? fallbackTheme
+                    setRootTheme(currentTheme)
                   }
                 }
               }
@@ -134,6 +139,9 @@ export default function ThemeOnScroll({ percentFromTop = 50, minWidth = 0, durat
     mql?.addEventListener("change", onChange)
 
     wireElementThemes()
+
+    // Ensure initial root theme matches the page's first element theme (or teal) to avoid mismatch on first paint.
+    setRootTheme(fallbackTheme)
 
     return () => {
       observer?.disconnect()
