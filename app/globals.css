@@ -1,0 +1,151 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* Added Porka Sans custom font face */
+@font-face {
+  font-family: "Porka Sans";
+  src: url("/fonts/Porka.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Theme palettes for scroll-driven color transitions */
+:root {
+  /* TEAL THEME (hero) */
+  --teal-background: #036e71;
+  --teal-text: #fcf4da;
+  --teal-button-bg: #fcf4da;
+  --teal-button-text: #036e71;
+
+  /* CREAM THEME (rest of page) */
+  --cream-background: #fcf4da;
+  --cream-text: #142822;
+  --cream-button-bg: #036e71;
+  --cream-button-text: #fcf4da;
+
+  /* Fixed semantic tokens to properly reference palette variables */
+  --color-background: var(--teal-background);
+  --color-text: var(--teal-text);
+  --color-button-bg: var(--teal-button-bg);
+  --color-button-text: var(--teal-button-text);
+
+  /* Animation tuning */
+  --theme-transition-duration: 600ms;
+  --theme-transition-ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+
+  /* DAZE-MEDIA Brand Colors for other components */
+  --background: #fcf4da;
+  --foreground: #142822;
+  --card: #fcf4da;
+  --card-foreground: #142822;
+  --popover: #fcf4da;
+  --popover-foreground: #142822;
+  --primary: #036e71;
+  --primary-foreground: #fcf4da;
+  --secondary: #142822;
+  --secondary-foreground: #fcf4da;
+  --muted: #e8dfc0;
+  --muted-foreground: #5a6662;
+  --accent: #036e71;
+  --accent-foreground: #fcf4da;
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.577 0.245 27.325);
+  --border: #d4c9a8;
+  --input: #d4c9a8;
+  --ring: #036e71;
+  --radius: 0.25rem;
+  --sidebar: #fcf4da;
+  --sidebar-foreground: #142822;
+  --sidebar-primary: #036e71;
+  --sidebar-primary-foreground: #fcf4da;
+  --sidebar-accent: #036e71;
+  --sidebar-accent-foreground: #fcf4da;
+  --sidebar-border: #d4c9a8;
+  --sidebar-ring: #036e71;
+}
+
+.dark {
+  --background: #036e71;
+  --foreground: #fcf4da;
+  --card: #036e71;
+  --card-foreground: #fcf4da;
+  --popover: #036e71;
+  --popover-foreground: #fcf4da;
+  --primary: #fcf4da;
+  --primary-foreground: #036e71;
+  --secondary: #fcf4da;
+  --secondary-foreground: #036e71;
+  --muted: #e8dfc0;
+  --muted-foreground: #5a6662;
+  --accent: #fcf4da;
+  --accent-foreground: #036e71;
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.577 0.245 27.325);
+  --border: #fcf4da;
+  --input: #fcf4da;
+  --ring: #fcf4da;
+  --radius: 0.25rem;
+  --sidebar: #036e71;
+  --sidebar-foreground: #fcf4da;
+  --sidebar-primary: #fcf4da;
+  --sidebar-primary-foreground: #036e71;
+  --sidebar-accent: #fcf4da;
+  --sidebar-accent-foreground: #036e71;
+  --sidebar-border: #fcf4da;
+  --sidebar-ring: #fcf4da;
+}
+
+/* Global application of semantic tokens with smooth transitions */
+html,
+body {
+  background: var(--color-background);
+  color: var(--color-text);
+  transition: background-color var(--theme-transition-duration) var(--theme-transition-ease), color
+    var(--theme-transition-duration) var(--theme-transition-ease);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply antialiased bg-background text-foreground;
+  }
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
