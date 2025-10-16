@@ -1,7 +1,6 @@
 "use client"
 
 import { useEffect } from "react"
-// Smoothly updates root CSS variables based on the section in view.
 
 const THEME_MAP: Record<
   string,
@@ -52,7 +51,7 @@ function setElementTheme(el: HTMLElement, themeId: string) {
   el.style.setProperty("--color-button-text", `var(${vars.buttonText})`)
 }
 
-export default function ThemeOnScroll({ percentFromTop = 50, minWidth = 0, durationMs, easing }: Props) {
+export default function ThemeOnScroll({ percentFromTop = 20, minWidth = 0, durationMs, easing }: Props) {
   useEffect(() => {
     const root = document.documentElement
 
@@ -83,52 +82,37 @@ export default function ThemeOnScroll({ percentFromTop = 50, minWidth = 0, durat
       })
     }
 
-    const sections = Array.from(document.querySelectorAll<HTMLElement>("[animate-body-to]"))
+    let currentTheme = "teal"
+    const fallbackTheme = "teal"
 
-    const vh = window.innerHeight
-    const offset = Math.round((percentFromTop / 100) * vh)
-    const rootMargin = `${-offset}px 0px ${offset - vh}px 0px`
+    setRootTheme(fallbackTheme)
 
-    let prevTheme: string | null = null
-    let currentTheme: string | null = null
-    // Fallback to the first element with an explicit element-theme, or default to 'teal'
-    const fallbackTheme =
-      document.querySelector<HTMLElement>("[element-theme]")?.getAttribute("element-theme") ?? "teal"
+    const handleScroll = () => {
+      if (!enabled) return
 
-    const observer =
-      enabled && sections.length
-        ? new IntersectionObserver(
-            (entries) => {
-              for (const entry of entries) {
-                const themeId = entry.target.getAttribute("animate-body-to")!
-                if (entry.isIntersecting) {
-                  prevTheme = currentTheme
-                  currentTheme = themeId
-                  setRootTheme(themeId)
-                } else {
-                  if (currentTheme === themeId) {
-                    // Restore the previous theme, or a safe fallback if none yet
-                    currentTheme = prevTheme ?? fallbackTheme
-                    setRootTheme(currentTheme)
-                  }
-                }
-              }
-            },
-            { root: null, rootMargin, threshold: 0 },
-          )
-        : null
+      const scrollTop = window.scrollY
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight
+      const scrollPercent = (scrollTop / docHeight) * 100
+
+      if (scrollPercent >= 20 && currentTheme !== "cream") {
+        currentTheme = "cream"
+        setRootTheme("cream")
+      } else if (scrollPercent < 20 && currentTheme !== "teal") {
+        currentTheme = "teal"
+        setRootTheme("teal")
+      }
+    }
 
     const enable = () => {
       enabled = true
       wireElementThemes()
-      sections.forEach((s) => {
-        observer?.observe(s)
-      })
+      window.addEventListener("scroll", handleScroll, { passive: true })
+      handleScroll()
     }
 
     const disable = () => {
       enabled = false
-      observer?.disconnect()
+      window.removeEventListener("scroll", handleScroll)
       clearElementThemes()
       setRootTheme("teal")
     }
@@ -140,11 +124,8 @@ export default function ThemeOnScroll({ percentFromTop = 50, minWidth = 0, durat
 
     wireElementThemes()
 
-    // Ensure initial root theme matches the page's first element theme (or teal) to avoid mismatch on first paint.
-    setRootTheme(fallbackTheme)
-
     return () => {
-      observer?.disconnect()
+      window.removeEventListener("scroll", handleScroll)
       mql?.removeEventListener("change", onChange)
     }
   }, [percentFromTop, minWidth, durationMs, easing])

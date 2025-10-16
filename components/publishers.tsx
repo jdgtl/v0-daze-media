@@ -57,17 +57,17 @@ export function Publishers() {
               href={publisher.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex flex-col items-center justify-center p-6 md:p-8 bg-background/5 hover:bg-background/10 rounded-lg transition-all duration-300 hover:scale-105"
+              className="group flex flex-col items-center justify-center p-6 md:p-8 bg-background/5 hover:bg-background/10 rounded-lg transition-all duration-300 hover:scale-105 !cursor-pointer"
             >
-              <div className="relative w-full h-16 md:h-20 mb-4 flex items-center justify-center">
+              <div className="relative w-full h-16 md:h-20 mb-4 flex items-center justify-center cursor-pointer">
                 <Image
                   src={publisher.logo || "/placeholder.svg"}
                   alt={publisher.name}
                   fill
-                  className="object-contain brightness-0 invert group-hover:brightness-100 group-hover:invert-0 transition-all duration-300"
+                  className="object-contain brightness-0 invert"
                 />
               </div>
-              <span className="text-xs md:text-sm font-serif uppercase tracking-wide text-secondary-foreground/60 group-hover:text-secondary-foreground transition-colors">
+              <span className="text-xs md:text-sm font-serif uppercase tracking-wide text-secondary-foreground/60 group-hover:text-secondary-foreground transition-colors cursor-pointer">
                 {publisher.culture}
               </span>
             </a>

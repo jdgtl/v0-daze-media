@@ -14,12 +14,23 @@ function AnimatedWord({
   index: number
   scrollYProgress: MotionValue<number>
 }) {
-  const start = index * 0.025
-  const end = start + 0.025
+  const start = index * 0.04
+  const end = start + 0.2
   const opacity = useTransform(scrollYProgress, [start, end], [0.25, 1])
 
+  const isDazMedia = word === "DAZE-MEDIA"
+
   return (
-    <motion.span className="inline-block" style={{ opacity }}>
+    <motion.span
+      className="inline-block"
+      style={{
+        opacity,
+        fontFamily: isDazMedia ? "var(--font-porka)" : undefined,
+        fontSize: isDazMedia ? "1.15em" : undefined,
+        fontWeight: isDazMedia ? "normal" : undefined,
+        letterSpacing: isDazMedia ? "-0.025em" : undefined,
+      }}
+    >
       {word}
     </motion.span>
   )
@@ -40,10 +51,8 @@ export function Hero() {
   return (
     <>
       <section
-        element-theme="teal"
         className="relative min-h-screen flex flex-col items-center justify-start p-8"
         style={{
-          background: "var(--color-background)",
           color: "var(--color-text)",
         }}
       >
@@ -70,7 +79,7 @@ export function Hero() {
             }}
             asChild
           >
-            <a href="/MEDIA KIT2025.pdf" download className="flex flex-col items-center gap-2">
+            <a href="/MEDIA KIT2025.pdf" download className="flex flex-col items-center gap-2 cursor-pointer">
               <span className="flex items-center gap-2">
                 <Download className="h-5 w-5" />
                 Download Media Kit
@@ -88,11 +97,8 @@ export function Hero() {
 
       <section
         animate-body-to="cream"
-        className="min-h-screen flex items-center justify-center px-6 py-20"
-        style={{
-          background: "var(--color-background)",
-          color: "var(--color-text)",
-        }}
+        className="min-h-screen flex items-center justify-center px-6"
+        style={{ background: "transparent" }}
       >
         <div className="max-w-6xl mx-auto">
           <h2

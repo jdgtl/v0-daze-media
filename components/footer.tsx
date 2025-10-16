@@ -12,18 +12,21 @@ export function Footer() {
 
           <div className="flex flex-col items-center md:items-end gap-4">
             <div className="flex gap-6 text-sm text-secondary-foreground/70">
-              <a href="mailto:contact@daze-media.com" className="hover:text-secondary-foreground transition-colors">
+              <a
+                href="mailto:contact@daze-media.com"
+                className="hover:text-secondary-foreground transition-colors cursor-pointer"
+              >
                 Contact
               </a>
-              <a href="#" className="hover:text-secondary-foreground transition-colors">
+              <a href="#" className="hover:text-secondary-foreground transition-colors cursor-pointer">
                 About
               </a>
-              <a href="#" className="hover:text-secondary-foreground transition-colors">
+              <a href="#" className="hover:text-secondary-foreground transition-colors cursor-pointer">
                 Careers
               </a>
             </div>
             <p className="text-xs text-secondary-foreground/50">
-              © {new Date().getFullYear()} DAZE-MEDIA. All rights reserved.
+              © {new Date().getFullYear()} <span className="font-logo">DAZE-MEDIA</span>. All rights reserved.
             </p>
           </div>
         </div>
