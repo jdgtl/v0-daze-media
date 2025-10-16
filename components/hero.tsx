@@ -38,7 +38,7 @@ function AnimatedWord({
 
 export function Hero() {
   const tagline =
-    "DAZE-MEDIA IS A ONE-OF-A-KIND NETWORK OF INDEPENDENT PUBLISHERS, EACH POWERING ITS OWN DISTINCT CULTURE."
+    "DAZE-MEDIA A ONE-OF-A-KIND NETWORK OF INDEPENDENT PUBLISHERS, EACH POWERING ITS OWN DISTINCT CULTURE."
 
   const headingRef = useRef<HTMLHeadingElement>(null)
   const { scrollYProgress } = useScroll({
@@ -109,6 +109,7 @@ export function Hero() {
             {words.map((word, index) => (
               <span key={index}>
                 <AnimatedWord word={word} index={index} scrollYProgress={scrollYProgress} />
+                {word === "DAZE-MEDIA" && <br />}
                 {index < words.length - 1 && " "}
               </span>
             ))}
